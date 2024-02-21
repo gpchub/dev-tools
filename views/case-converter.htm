@@ -1,0 +1,68 @@
+<section>
+    <div class="mb-4">Chuyển đổi text case</div>
+    <textarea name="code" id="source" class="border border-gray-300 focus:border-gray-300 outline-none w-full p-4" rows="10"></textarea>
+    <div class="flex gap-4">
+        <button type="button" class="button btn-change-case" data-type="sentence">Sentence case</button>
+        <button type="button" class="button btn-change-case" data-type="uppercase">UPPERCASE</button>
+        <button type="button" class="button btn-change-case" data-type="lowercase">lowercase</button>
+        <button type="button" class="button btn-change-case" data-type="capital">Capitalize Case</button>
+        <button type="button" class="button btn-change-case" data-type="snake">snake_case</button>
+        <button type="button" class="button btn-change-case" data-type="pascal">PascalCase</button>
+        <button type="button" class="button btn-change-case" data-type="camel">camelCase</button>
+        <button type="button" class="button btn-change-case" data-type="kebab">kebab-case</button>
+    </div>
+</section>
+
+<script>
+    function convertCase(text, convertTo) {
+        text = text.trim();
+        switch(convertTo) {
+            case 'sentence':
+                text = Sugar.String.humanize(text);
+                break;
+
+            case 'uppercase':
+                text = text.toUpperCase(text);
+                break;
+
+            case 'lowercase':
+                text = text.toLowerCase(text);
+                break;
+
+            case 'capital':
+                text = Sugar.String.titleize(text);
+                break;
+
+            case 'snake':
+                text = Sugar.String.underscore(text);
+                break;
+
+            case 'pascal':
+                text = Sugar.String.camelize(text);
+                text = text.charAt(0).toUpperCase() + text.slice(1);
+                break;
+
+            case 'camel':
+                text = Sugar.String.camelize(text);
+                text = text.charAt(0).toLowerCase() + text.slice(1);
+                break;
+
+            case 'kebab':
+                text = Sugar.String.dasherize(text);
+                break;
+        }
+
+        return text;
+    }
+
+    document.body.addEventListener("click", function (event) {
+        if (event.target.classList.contains("btn-change-case")) {
+            var convertTo = event.target.dataset.type;
+            const sourceElement = document.getElementById('source');
+            let sourceText = sourceElement.value;
+            let result = convertCase(sourceText, convertTo);
+            sourceElement.value = result;
+        }
+    });
+
+</script>

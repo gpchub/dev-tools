@@ -1,0 +1,90 @@
+<section>
+    <div class="mb-4">Map JSON object by index</div>
+    <div class="grid grid-cols-2 gap-4 mb-4">
+        <div>
+            <textarea name="code" id="source" class="border border-gray-300 focus:border-gray-300 outline-none w-full p-4" rows="10"></textarea>
+        </div>
+        <div>
+            <textarea name="code" id="destination" class="border border-gray-300 focus:border-gray-300 outline-none w-full p-4" rows="10"></textarea>
+        </div>
+    </div>
+
+    <div class="mp4">
+        <textarea name="code" id="result" class="border border-gray-300 focus:border-gray-300 outline-none w-full p-4" rows="10"></textarea>
+    </div>
+
+    <div class="flex gap-4">
+        <button type="button" class="button btn-submit" data-type="key">Map key</button>
+        <button type="button" class="button btn-submit" data-type="value">Map value</button>
+    </div>
+</section>
+
+<script>
+    function swapKeyValue(obj) {
+        return Object.keys(obj).reduce((ret, key) => {
+            ret[obj[key]] = key;
+            return ret;
+        }, {});
+    }
+
+    function mapObjects(source, destination, type = 'key')
+    {
+        let result = {};
+        switch(type)
+        {
+            case 'key':
+                result = mapObjectsByKey(source, destination);
+                break;
+            case 'value':
+                result = mapObjectsByValue(source, destination);
+                break;
+        }
+
+        return result;
+    }
+
+    function mapObjectsByValue(source, destination)
+    {
+        return Object.keys(source).reduce((result, key, index) => {
+            result[key] = destination['key'];
+            return result;
+        }, {});
+    }
+
+    function mapObjectsByKey(source, destination)
+    {
+        let result = {};
+        let sourceKeys = Object.keys(source);
+        console.log(source);
+        console.log(destination);
+        Object.keys(destination).forEach(function(item, index) {
+            console.log(item);
+            console.log(sourceKeys[index]);
+            console.log(source[ sourceKeys[index] ]);
+            result[item] = source[ sourceKeys[index] ];
+        });
+
+        return result;
+    }
+
+    document.body.addEventListener("click", function (event) {
+        if (event.target.classList.contains("btn-submit")) {
+            const sourceElement = document.getElementById('source');
+            const destinationElement = document.getElementById('destination');
+            const resultElement = document.getElementById('result');
+            let sourceText = sourceElement.value;
+            let destinationText = destinationElement.value;
+            let sourceObj = JSON.parse(sourceText);
+            let destinationObj = JSON.parse(destinationText);
+
+            const type = event.target.dataset.type ?? 'key';
+
+            if (sourceObj && destinationObj) {
+                let result = mapObjects(sourceObj, destinationObj, type);
+                resultElement.innerHTML = JSON.stringify(result);
+            }
+
+        }
+    });
+
+</script>

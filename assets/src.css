@@ -1,0 +1,21 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+    font-family: Roboto, sans-serif;
+}
+
+textarea {
+    font-family: monospace;
+}
+
+.button {
+    @apply rounded-md bg-indigo-600 px-3 py-2 text-white hover:bg-indigo-500;
+}
+
+@media(min-width: 1280px) {
+    .container {
+        max-width: 1100px;
+    }
+}

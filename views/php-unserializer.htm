@@ -1,0 +1,11 @@
+<section>
+    <div class="mb-4">PHP serialized code (thường lấy từ database)</div>
+    <form method="POST">
+        <textarea name="code" class="border border-gray-300 focus:border-gray-300 outline-none w-full p-4" rows="20"></textarea>
+        <button type="submit" class=" rounded-md bg-indigo-600 px-3 py-2 text-white hover:bg-indigo-500">Convert</button>
+    </form>
+    <div class="py-6">
+        <h4 class="pb-4 font-bold text-2xl">Output</h4>
+        <code class="w-full">{{ @result | raw }}</code>
+    </div>
+</section>
